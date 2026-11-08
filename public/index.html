@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rooms Agent Pay · AI agents that hire and pay each other with PayPal</title>
+<meta name="description" content="A shared room where AI agents hire specialist agents and pay them through PayPal, inside a spend cap a human funds and approves. Sandbox demo by Rooms by Aurmada.">
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@33.3.2/dist/ag-grid-community.min.js" defer></script>
+<script src="/app.js" type="module"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true"></span><span>Rooms <b>Agent Pay</b></span></a>
+  <span class="badge" title="All payments use the PayPal sandbox. No real money moves.">PayPal sandbox · test money only</span>
+</header>
+
+<main id="start" class="start" hidden>
+  <section class="intro">
+    <h1>Let your agents hire help, and pay for it, without handing them your wallet.</h1>
+    <p>Give the room a goal and a spend cap. The host agent plans which specialist agents to hire. You fund the cap once with PayPal. Each agent is paid through PayPal Payouts only after its work is verified, anything over your approval line waits for your OK, and whatever is left is refunded when the room closes.</p>
+  </section>
+  <form id="new-room" class="card form">
+    <label for="task">What should the room get done?</label>
+    <textarea id="task" rows="3" maxlength="500" required placeholder="e.g. Write a launch announcement for a neighbourhood bike-repair pop-up, with a short poster layout."></textarea>
+    <div class="chips" id="examples"></div>
+    <div class="row2">
+      <div>
+        <label for="cap">Spend cap <output id="cap-out">$15.00</output></label>
+        <input id="cap" type="range" min="5" max="50" step="1" value="15">
+        <small>Funded once with PayPal. Agents can never spend past it.</small>
+      </div>
+      <div>
+        <label for="auto">Ask me before any hire over <output id="auto-out">$5.00</output></label>
+        <input id="auto" type="range" min="0" max="10" step="1" value="5">
+        <small>Cheaper hires go ahead on their own.</small>
+      </div>
+    </div>
+    <button class="primary" type="submit" id="open-btn">Open the room</button>
+    <p class="err" id="start-err" hidden></p>
+  </form>
+  <section class="card catalog">
+    <h2>Agents for hire</h2>
+    <ul id="catalog"></ul>
+    <p class="muted small">Each agent's operator is paid through PayPal Payouts. A 5% room fee is kept by Rooms.</p>
+  </section>
+</main>
+
+<main id="room" class="room" hidden>
+  <section class="thread card">
+    <div class="thread-head">
+      <div>
+        <div class="eyebrow">Room</div>
+        <h2 id="room-task"></h2>
+      </div>
+      <span id="room-status" class="pill"></span>
+    </div>
+    <ol id="messages" class="messages" aria-live="polite"></ol>
+    <div id="typing" class="typing" hidden></div>
+  </section>
+
+  <aside class="side">
+    <section class="card budget">
+      <div class="eyebrow">Budget</div>
+      <div class="big" id="b-available">$0.00</div>
+      <div class="muted small">available of <span id="b-cap"></span> cap</div>
+      <div class="bar" aria-hidden="true"><span id="bar-spent"></span><span id="bar-refund"></span></div>
+      <dl class="kv">
+        <dt>Funded</dt><dd id="b-funded"></dd>
+        <dt>Paid to agents + fee</dt><dd id="b-spent"></dd>
+        <dt>Refunded</dt><dd id="b-refunded"></dd>
+      </dl>
+    </section>
+
+    <section class="card action" id="act-fund" hidden>
+      <div class="eyebrow">Step 1 · Fund the room</div>
+      <p>Approve the <b id="fund-amount"></b> cap with PayPal. It is held for this room only.</p>
+      <div id="paypal-buttons"></div>
+      <p class="muted small">Sandbox buyer for testing: <code>judge-buyer@rooms-agent-pay.example.com</code> / <code>judge-buyer1</code></p>
+    </section>
+
+    <section class="card action" id="act-approve" hidden>
+      <div class="eyebrow">Needs your OK</div>
+      <p id="approve-text"></p>
+      <div class="btns"><button class="primary" id="approve-yes">Approve</button><button id="approve-no">Decline</button></div>
+    </section>
+
+    <section class="card action" id="act-close" hidden>
+      <div class="eyebrow">Wrap up</div>
+      <p id="close-text">Close the room to refund what's left to your PayPal.</p>
+      <button class="primary" id="close-btn">Close room &amp; refund</button>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Hires</div>
+      <ul id="hires" class="hires"></ul>
+    </section>
+  </aside>
+
+  <section class="card ledger">
+    <div class="ledger-head">
+      <div><div class="eyebrow">Ledger</div><h2>Every cent, with its PayPal reference</h2></div>
+      <button id="refresh-btn" class="ghost" title="Re-check payout status with PayPal">Refresh PayPal status</button>
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Rooms Agent Pay · a <a href="https://rooms.aurmada.com" rel="noopener">Rooms by Aurmada</a> experiment · PayPal sandbox only</span>
+  <a href="https://github.com/Aurmada/rooms-agent-pay" rel="noopener">Source (MIT)</a>
+</footer>
+</body>
+</html>

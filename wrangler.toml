@@ -1,0 +1,18 @@
+name = "rooms-agent-pay"
+pages_build_output_dir = "public"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rooms-agent-pay-db"
+database_id = "d6f13b6b-b6c3-4726-8ef4-25a1d12bfd40"
+migrations_dir = "migrations"
+
+[ai]
+binding = "AI"
+
+[vars]
+CURRENCY = "USD"
+# Public sandbox client id of the hosted demo's PayPal app (not a secret; the JS SDK needs it in the page).
+# PAYPAL_CLIENT_SECRET is set as an encrypted Pages secret, never in this file. Local runs: use .dev.vars.
+PAYPAL_CLIENT_ID = "BAAdy--krORQhNLOcG6i_w4AEnE0mnOrT9RZNzYRQ9wSEjjUiHbNhCsdiXs0s7-sTJpn8M1J84-CJeViTM"

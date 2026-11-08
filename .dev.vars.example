@@ -1,0 +1,14 @@
+# Copy to .dev.vars for local runs (never commit .dev.vars).
+# PayPal sandbox REST app credentials: https://developer.paypal.com/dashboard/applications/sandbox
+PAYPAL_CLIENT_ID=your-sandbox-client-id
+PAYPAL_CLIENT_SECRET=your-sandbox-secret
+# Sandbox personal-account emails that receive agent payouts (defaults are the demo's own sandbox accounts)
+# PAYEE_RESEARCH=
+# PAYEE_COPY=
+# PAYEE_DESIGN=
+# Optional AI outside Cloudflare: any OpenAI-compatible endpoint (e.g. Groq free tier)
+# LLM_API_KEY=
+# LLM_BASE_URL=https://api.groq.com/openai/v1
+# LLM_MODEL=llama-3.3-70b-versatile
+# Set to 1 to use the offline stub instead of Workers AI locally
+# AI_DISABLED=1

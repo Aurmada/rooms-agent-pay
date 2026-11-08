@@ -1,0 +1,18 @@
+{
+  "name": "rooms-agent-pay",
+  "version": "1.0.0",
+  "description": "Rooms Agent Pay: AI agents in a shared room hire and pay each other with PayPal, under a spend cap a human sets and approves.",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "db:local": "wrangler d1 migrations apply rooms-agent-pay-db --local",
+    "dev": "wrangler pages dev --port 8788",
+    "test": "node --experimental-sqlite --test test/*.test.js",
+    "deploy": "wrangler d1 migrations apply rooms-agent-pay-db --remote && wrangler pages deploy public --project-name rooms-agent-pay --branch main"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "engines": { "node": ">=22.5" }
+}
